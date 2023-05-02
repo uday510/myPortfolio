@@ -1,0 +1,20 @@
+{
+  "name": "myportfolio",
+  "version": "1.0.0",
+  "description": "Portfolio Application",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uday510/myPortfolio.git"
+  },
+  "author": "Bandi Uday Teja",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/uday510/myPortfolio/issues"
+  },
+  "homepage": "https://github.com/uday510/myPortfolio#readme"
+}
