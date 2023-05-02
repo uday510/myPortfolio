@@ -24,7 +24,6 @@ app.get("/", (req, res) => {
   res.send("Welcome GodFather!");
 });
 
-
 // Connect to the Database
 mongoose
   .connect(dbConfig.DB_URL, {
