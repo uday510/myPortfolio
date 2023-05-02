@@ -24,7 +24,6 @@ app.get("/", (req, res) => {
   res.send("Welcome GodFather!");
 });
 
-require("./routes")(app); // Initialize the route/s
 
 // Connect to the Database
 mongoose
@@ -35,7 +34,7 @@ mongoose
   .then(() => {
     console.log(`Pinging Google Cloud Servers...`);
     console.log(`Ping Successful`);
-    console.log(`Connection to Atlas GCP Mumbai (asia-south1)...`);
+    console.log(`Connecting to Atlas GCP Mumbai (asia-south1)...`);
     console.log(`Connection established`);
   })
   .catch((err) => {

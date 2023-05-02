@@ -1,5 +1,5 @@
 module.exports = {
   DB_NAME: "AdminApplication",
   DB_URL:
-    "mongodb+srv://admin:<password>@cluster0.zjfjzzt.mongodb.net/admin",
+    "mongodb+srv://admin:zC7Fr5WR9izcKNEO@cluster0.zjfjzzt.mongodb.net/admin",
 };
