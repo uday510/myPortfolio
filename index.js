@@ -44,6 +44,6 @@ mongoose
 //Initialize the express server
 module.exports = app.listen((serverConfig.HOST, serverConfig.PORT), () => {
   console.log(
-    `Admin Application Running on PORT ${serverConfig.PORT}`
+    `Admin Application Running on PORT: ${serverConfig.PORT}`
   );
 });
