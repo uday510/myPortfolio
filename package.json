@@ -22,7 +22,6 @@
   "homepage": "https://github.com/uday510/myPortfolio#readme",
   "dependencies": {
     "body-parser": "^1.20.2",
-    "dotenv": "^16.0.3",
     "mongoose": "^7.1.0",
     "nodemon": "^2.0.22"
   }
