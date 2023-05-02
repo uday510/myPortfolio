@@ -7,7 +7,6 @@
     "node": "14.x"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js"
   },
   "repository": {
@@ -15,7 +14,7 @@
     "url": "git+https://github.com/uday510/myPortfolio.git"
   },
   "author": "Bandi Uday Teja",
-  "license": "ISC",
+  "license": "GNU GENERAL PUBLIC LICENSE",
   "bugs": {
     "url": "https://github.com/uday510/myPortfolio/issues"
   },
