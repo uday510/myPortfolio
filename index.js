@@ -4,6 +4,8 @@ const serverConfig = require("./configs/server.config");
 const bodyParser = require("body-parser");
 const dbConfig = require("./configs/db.config");
 const app = express(); // Initialize express instance
+const axios = require("axios");
+const os = require("os");
 
 console.clear(); // clear the console to remove previous logging
 
@@ -11,12 +13,10 @@ app.use(bodyParser.json()); // used to parse the request and extract the informa
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // for testing purposes
-app.get("/", (req, res) => {
-  res.send(
-    `Request-Date: ${new Date().toString()} ${req.method} ${req.url} ${
-      req.socket.remoteAddress
-    }\n`
-  );
+app.get("/", async (req, res) => {
+console.log();
+  const ip = await axios.get("https://checkip.amazonaws.com/");
+  res.send(`Welcome ${os.hostname()} ${ip.data}`);
 });
 
 // Connect to the Database
