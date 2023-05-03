@@ -14,9 +14,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // for testing purposes
 app.get("/", async (req, res) => {
-console.log();
   const ip = await axios.get("https://checkip.amazonaws.com/");
-  res.send(`Welcome ${ip.data}, it's me ${os.hostname()}`);
+  res.send(`Welcome ${ip.data}, it's me ${os.hostname()} with ❤️ from San Francisco, USA (West) - sfo1`);
 });
 
 // Connect to the Database
