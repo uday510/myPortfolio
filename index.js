@@ -7,21 +7,16 @@ const app = express(); // Initialize express instance
 
 console.clear(); // clear the console to remove previous logging
 
-// Logs time for every request
-function requestTime(req, res, next) {
-  process.stdout.write(
-    `Request-Date: ${new Date().toString()} ${req.method} ${req.url} \n`
-  );
-  next();
-}
-
-app.use(requestTime); // logs request time
 app.use(bodyParser.json()); // used to parse the request and extract the information
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // for testing purposes
 app.get("/", (req, res) => {
-  res.send("Welcome GodFather!");
+  res.send(
+    `Request-Date: ${new Date().toString()} ${req.method} ${req.url} ${
+      req.socket.remoteAddress
+    }\n`
+  );
 });
 
 // Connect to the Database
