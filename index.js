@@ -4,7 +4,6 @@ const serverConfig = require("./configs/server.config");
 const bodyParser = require("body-parser");
 const dbConfig = require("./configs/db.config");
 const app = express(); // Initialize express instance
-const axios = require("axios");
 const os = require("os");
 
 console.clear(); // clear the console to remove previous logging

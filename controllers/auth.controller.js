@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 const config = require("../configs/auth.config");
+const axios = require("axios");
 
 // for user signup
 exports.signup = async (req, res) => {
@@ -79,6 +80,21 @@ exports.signin = async (req, res) => {
     console.error(err.message);
     res.status(500).send({
       message: "Internal server error while signing user",
+    });
+  }
+};
+
+exports.getServerDetails = async (req, res) => {
+  try {
+    const ip = await axios.get("http://checkip.amazonaws.com/");
+    const serverDetails = await axios.get(`http://ip-api.com/json/${ip.data}`);
+    res.status(200).send({
+      data: serverDetails.data,
+    });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send({
+      message: "Internal server error while fetching server details",
     });
   }
 };

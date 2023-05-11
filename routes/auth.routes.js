@@ -13,4 +13,9 @@ module.exports = (app) => {
     [authUser.validateSigninRequest],
     authController.signin
   ); // for user signin
+  app.get(
+    "/app/api/v1/ip",
+    // [authUser.validateSigninRequest],
+    authController.getServerDetails
+  ); 
 };
