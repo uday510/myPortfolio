@@ -20,8 +20,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // for testing purposes
 app.get("/", async (req, res) => {
-  const ip = await axios.get("https://checkip.amazonaws.com/");
-  res.send(`Welcome ${ip.data}, it's me ${os.hostname()} with ❤️ from San Francisco, USA (West) - sfo1`);
+  const parseIp = (req) =>
+    req.headers["x-forwarded-for"]?.split(",").shift() ||
+    req.socket?.remoteAddress;
+
+  res.send(`Welcome ${parseIp(req)}, it's me ${os.hostname()} 
+  with ❤️ from San Francisco, USA (West) - sfo1`);
 });
 
 require("./routes")(app) // Initialize the route/s
