@@ -86,8 +86,10 @@ exports.signin = async (req, res) => {
 
 exports.getServerDetails = async (req, res) => {
   try {
-    const ip = await axios.get("http://checkip.amazonaws.com/");
-    const serverDetails = await axios.get(`http://ip-api.com/json/${ip.data}`);
+    const ip =
+      req.headers["x-forwarded-for"]?.split(",").shift() ||
+      req.socket?.remoteAddress;
+    const serverDetails = await axios.get(`http://ip-api.com/json/${ip}`);
     res.status(200).send({
       data: serverDetails.data,
     });
