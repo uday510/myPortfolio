@@ -84,12 +84,27 @@ exports.signin = async (req, res) => {
   }
 };
 
-exports.getServerDetails = async (req, res) => {
+exports.getClientDetails = async (req, res) => {
   try {
     const ip =
       req.headers["x-forwarded-for"]?.split(",").shift() ||
       req.socket?.remoteAddress;
     const serverDetails = await axios.get(`http://ip-api.com/json/${ip}`);
+    res.status(200).send({
+      data: serverDetails.data,
+    });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send({
+      message: "Internal server error while fetching server details",
+    });
+  }
+};
+
+exports.getServerDetails = async (req, res) => {
+  try {
+    const ip = await axios.get("http://checkip.amazonaws.com/");
+    const serverDetails = await axios.get(`http://ip-api.com/json/${ip.data}`);
     res.status(200).send({
       data: serverDetails.data,
     });

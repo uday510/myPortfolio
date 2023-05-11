@@ -16,6 +16,11 @@ module.exports = (app) => {
   app.get(
     "/app/api/v1/ip",
     // [authUser.validateSigninRequest],
-    authController.getServerDetails
+    authController.getClientDetails
   ); 
+  app.get(
+    "/app/api/v1/server",
+    // [authUser.validateSigninRequest],
+    authController.getServerDetails
+  );
 };
