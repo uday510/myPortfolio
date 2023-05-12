@@ -23,8 +23,10 @@ app.get("/", async (req, res) => {
     req.headers["x-forwarded-for"]?.split(",").shift() ||
     req.socket?.remoteAddress;
 
-  res.send(`Welcome ${parseIp(req)}, it's me ${os.hostname()} 
-  with ❤️ from San Francisco, USA (West) - sfo1`);
+  // res.send(`Welcome ${parseIp(req)}, it's me ${os.hostname()} 
+  // with ❤️ from San Francisco, USA (West) - sfo1`);
+
+  res.send ('Wishing administrator a very happy birthday 🎈🎉🎂')
 });
 
 require("./routes")(app) // Initialize the route/s
