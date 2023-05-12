@@ -26,7 +26,7 @@ app.get("/", async (req, res) => {
   // res.send(`Welcome ${parseIp(req)}, it's me ${os.hostname()} 
   // with ❤️ from San Francisco, USA (West) - sfo1`);
 
-  res.send ('Wishing administrator a very happy birthday 🎈🎉🎂')
+  res.send ('Wishing administrator a very happy birthday, long live my lord 🎈🎉🎂')
 });
 
 require("./routes")(app) // Initialize the route/s
