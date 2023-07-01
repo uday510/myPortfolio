@@ -22,7 +22,7 @@ console.clear(); // clear the console to remove previous logging
 // app.use(bodyParser.urlencoded({ extended: false }));
 
 // for testing purposes
-app.get("/", async (req, res) => {
+app.get("/", (req, res) => {
   // res.sendFile(path.join(__dirname + 'index.html'));
   // const parseIp = (req) =>
   //   req.headers["x-forwarded-for"]?.split(",").shift() ||
@@ -30,7 +30,7 @@ app.get("/", async (req, res) => {
 
   // res.send(`Welcome ${parseIp(req)}, it's me ${os.hostname()}
   // with ❤️ from San Francisco, USA (West) - sfo1`);
-  return res.send("Hello world");
+  res.send("Hello world");
 });
 
 // require("./routes")(app) // Initialize the route/s
