@@ -18,7 +18,7 @@ function requestTime(req, res, next) {
 }
 app.use(requestTime); // logs request time
 app.use(bodyParser.json()); // used to parse the request and extract the information
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // for testing purposes
 app.get("/", async (req, res) => {
