@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // for testing purposes
 app.get("/", async (req, res) => {
-  res.sendFile(path.join(__dirname + '/index.html'));
+  res.sendFile(path.join(__dirname + 'index.html'));
   const parseIp = (req) =>
     req.headers["x-forwarded-for"]?.split(",").shift() ||
     req.socket?.remoteAddress;
