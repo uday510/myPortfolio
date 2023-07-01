@@ -1,0 +1,38 @@
+/*=============== THEME ===============*/
+.change-theme{
+	font-size: 1.25rem;
+	color: var(--title-color);
+	cursor: pointer;
+}
+
+/*========== Variables Dark theme ==========*/
+body.dark-theme{
+	--title-color: hsl(40, 48%, 90%);
+   --text-color: hsl(40, 12%, 70%);
+   --body-color: hsl(40, 12%, 16%);
+   --container-color: hsl(40, 20%, 8%);
+}
+
+/*========== 
+	Color changes in some parts of 
+	the website, in dark theme
+==========*/
+.dark-theme{
+	& :is(.nav__menu, .scrollup){
+		background-color: hsl(40, 20%, 12%);
+	}
+	& .home__profession{
+		text-shadow: 0 0 6px hsla(40, 20%, 12%);
+	}
+	&::-webkit-scrollbar{
+		background-color: hsl(40, 16%, 15%);
+
+		&-thumb{
+			background-color: hsl(40, 16%, 25%);
+
+			&:hover{
+				background-color: hsl(40, 16%, 35%);
+			}
+		}
+	}
+}
