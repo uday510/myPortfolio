@@ -1,0 +1,31 @@
+{
+  "name": "myportfolio",
+  "version": "1.0.0",
+  "description": "Portfolio Application",
+  "main": "index.js",
+  "engines": {
+    "node": "14.x"
+  },
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uday510/myPortfolio.git"
+  },
+  "author": "Bandi Uday Teja",
+  "license": "GNU GENERAL PUBLIC LICENSE",
+  "bugs": {
+    "url": "https://github.com/uday510/myPortfolio/issues"
+  },
+  "homepage": "https://github.com/uday510/myPortfolio#readme",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.1.0",
+    "nodemon": "^2.0.22"
+  }
+}
