@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require('path');
 const mongoose = require("mongoose");
 const serverConfig = require("./configs/server.config");
 const bodyParser = require("body-parser");
@@ -7,6 +8,11 @@ const app = express(); // Initialize express instance
 const os = require("os");
 
 console.clear(); // clear the console to remove previous logging
+
+
+app.use(express.static("assets"));
+
+
 
 // Logs time for every request
 function requestTime(req, res, next) {
@@ -19,15 +25,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // for testing purposes
 app.get("/", async (req, res) => {
-  const parseIp = (req) =>
-    req.headers["x-forwarded-for"]?.split(",").shift() ||
-    req.socket?.remoteAddress;
+  res.sendFile(path.join(__dirname + '/index.html'));
+  // const parseIp = (req) =>
+  //   req.headers["x-forwarded-for"]?.split(",").shift() ||
+  //   req.socket?.remoteAddress;
 
 //   res.send(`Welcome ${parseIp(req)}, it's me ${os.hostname()} 
 //   with ❤️ from San Francisco, USA (West) - sfo1`);
-    
-    res.send(`Hi, im sathwik`)
-
 });
 
 require("./routes")(app) // Initialize the route/s
