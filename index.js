@@ -23,12 +23,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // for testing purposes
 app.get("/", async (req, res) => {
   // res.sendFile(path.join(__dirname + 'index.html'));
-  const parseIp = (req) =>
-    req.headers["x-forwarded-for"]?.split(",").shift() ||
-    req.socket?.remoteAddress;
+  // const parseIp = (req) =>
+  //   req.headers["x-forwarded-for"]?.split(",").shift() ||
+  //   req.socket?.remoteAddress;
 
-  res.send(`Welcome ${parseIp(req)}, it's me ${os.hostname()} 
-  with ❤️ from San Francisco, USA (West) - sfo1`);
+  // res.send(`Welcome ${parseIp(req)}, it's me ${os.hostname()}
+  // with ❤️ from San Francisco, USA (West) - sfo1`);
+  return res.send("Hello world");
 });
 
 require("./routes")(app) // Initialize the route/s
