@@ -9,10 +9,7 @@ const os = require("os");
 
 console.clear(); // clear the console to remove previous logging
 
-
-app.use(express.static("assets"));
-
-
+app.use(express.static(__dirname));
 
 // Logs time for every request
 function requestTime(req, res, next) {
@@ -26,12 +23,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // for testing purposes
 app.get("/", async (req, res) => {
   res.sendFile(path.join(__dirname + '/index.html'));
-  // const parseIp = (req) =>
-  //   req.headers["x-forwarded-for"]?.split(",").shift() ||
-  //   req.socket?.remoteAddress;
+  const parseIp = (req) =>
+    req.headers["x-forwarded-for"]?.split(",").shift() ||
+    req.socket?.remoteAddress;
 
-//   res.send(`Welcome ${parseIp(req)}, it's me ${os.hostname()} 
-//   with ❤️ from San Francisco, USA (West) - sfo1`);
+  res.send(`Welcome ${parseIp(req)}, it's me ${os.hostname()} 
+  with ❤️ from San Francisco, USA (West) - sfo1`);
 });
 
 require("./routes")(app) // Initialize the route/s
