@@ -22,14 +22,14 @@ app.use(bodyParser.json()); // used to parse the request and extract the informa
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
-app.get("/", (req, res) => {
-  return res.sendFile(path.join(__dirname + '/index.html'));
+// app.get("/", (req, res) => {
+  // return res.sendFile(path.join(__dirname + '/index.html'));
   // const parseIp = (req) =>
   //   req.headers["x-forwarded-for"]?.split(",").shift() ||
   //   req.socket?.remoteAddress;
   // res.send(`Welcome ${parseIp(req)}, it's me ${os.hostname()}
   // with ❤️ from San Francisco, USA (West) - sfo1`);
-});
+// });
 
 require("./routes")(app) // Initialize the route/s
 
