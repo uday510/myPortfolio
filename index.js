@@ -21,7 +21,10 @@ app.use(requestTime); // logs request time
 app.use(bodyParser.json()); // used to parse the request and extract the information
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// for testing purposes
+
+
+require("./routes")(app) // Initialize the route/s
+
 app.get("/", (req, res) => {
   return res.sendFile(path.join(__dirname + 'index.html'));
   // const parseIp = (req) =>
@@ -33,7 +36,6 @@ app.get("/", (req, res) => {
   // res.send("Hello world");
 });
 
-require("./routes")(app) // Initialize the route/s
 // Connect to the Database
 mongoose
   .connect(dbConfig.DB_URL, {
