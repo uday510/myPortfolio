@@ -9,7 +9,7 @@ const os = require("os");
 
 console.clear(); // clear the console to remove previous logging
 
-app.use("/", express.static(__dirname));
+app.use(express.static(__dirname));
 
 // Logs time for every request
 function requestTime(req, res, next) {
