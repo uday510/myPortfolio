@@ -6,6 +6,8 @@ const bodyParser = require("body-parser");
 const dbConfig = require("./configs/db.config");
 const app = express(); // Initialize express instance
 const os = require("os");
+const networkRoutes = require("./controllers/network.controller");
+
 
 console.clear(); // clear the console to remove previous logging
 
@@ -21,6 +23,12 @@ function requestTime(req, res, next) {
 app.use(bodyParser.json()); // used to parse the request and extract the information
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use((req, res) => {
+  const host = req.headers.host;
+  if (host === 'ping.udayteja.com') {
+    return networkRoutes(req, res);
+  }
+});
 require("./routes")(app) // Initialize the route/s
 
 app.use((req, res, next) => {
