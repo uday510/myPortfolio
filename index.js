@@ -6,12 +6,9 @@ const bodyParser = require("body-parser");
 const dbConfig = require("./configs/db.config");
 const app = express(); // Initialize express instance
 const os = require("os");
-const networkRoutes = require("./controllers/network.controller");
 
+// console.clear(); // clear the console to remove previous logging
 
-console.clear(); // clear the console to remove previous logging
-
-app.use(express.static(__dirname));
 
 // Logs time for every request
 function requestTime(req, res, next) {
@@ -23,12 +20,19 @@ function requestTime(req, res, next) {
 app.use(bodyParser.json()); // used to parse the request and extract the information
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use((req, res) => {
-  const host = req.headers.host;
-  if (host === 'ping.udayteja.com') {
-    return networkRoutes(req, res);
+
+app.use((req, res, next) => {
+  const userAgent = req.get('User-Agent');
+  if (userAgent && userAgent.includes('curl')) {
+    // Request may have come from a shell
+    // You can add more checks based on the User-Agent header
+    return res.status(200).send('CONNECTED TO THE INTERNET\n')
   }
-});
+  next();
+})
+
+app.use(express.static(__dirname));
+
 require("./routes")(app) // Initialize the route/s
 
 app.use((req, res, next) => {

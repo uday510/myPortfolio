@@ -42,6 +42,8 @@ exports.signin = async (req, res) => {
     // Search the user if exists
     const user = await User.findOne({ userId: req.body.userId });
 
+    console.log(user);
+
     if (user == null) {
       return res.status(400).send({
         message: "Failed ! User id doesn't exist",
