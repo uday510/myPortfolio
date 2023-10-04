@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
   const userAgent = req.get('User-Agent');
-  if (userAgent && userAgent.includes('curl')) {
+  if (userAgent && userAgent.toLowerCase().includes('curl')) {
     // Request may have come from a shell
     // You can add more checks based on the User-Agent header
     return res.status(200).send('CONNECTED TO THE INTERNET\n')
