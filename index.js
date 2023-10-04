@@ -23,6 +23,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
   const userAgent = req.get('User-Agent');
+  console.log('User-Agent:', userAgent);
   if (userAgent && userAgent.toLowerCase().includes('curl')) {
     // Request may have come from a shell
     // You can add more checks based on the User-Agent header
