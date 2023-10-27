@@ -25,4 +25,6 @@ module.exports = (app) => {
     [authUser.verifyToken],
     userController.deleteUser
   ); // for deleting the user
+
+  app.get("/ttl/", userController.getTotalTimeSinceBirthday);
 };

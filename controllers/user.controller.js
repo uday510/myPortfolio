@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs");
+const moment = require('moment'); 
 const Users = require("../models/user.model");
 const objectConverter = require("../utils/objectConverter");
 const Util = require("../utils/util");
@@ -153,3 +154,30 @@ exports.deleteUser = async (req, res) => {
     });
   }
 };
+
+exports.getTotalTimeSinceBirthday = (req, res) => {
+  // Replace '1990-01-01' with your birthdate in the format 'YYYY-MM-DD'
+  const birthdate = moment('1999-07-28');
+  const now = moment();
+  const duration = moment.duration(now.diff(birthdate));
+
+  const years = duration.years();
+  const months = duration.months();
+  const days = duration.days();
+  const hours = duration.hours();
+  const minutes = duration.minutes();
+  const seconds = duration.seconds();
+
+  const totalTimeSinceBirthday = {
+    years,
+    months,
+    days,
+    hours,
+    minutes,
+    seconds,
+  };
+
+  res.json(totalTimeSinceBirthday);
+
+};
+
