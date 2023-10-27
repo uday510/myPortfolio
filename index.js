@@ -32,13 +32,16 @@ app.use((req, res, next) => {
   next();
 })
 
-app.use(express.static(__dirname));
 
 require("./routes")(app) // Initialize the route/s
+
+
+app.use(express.static(__dirname));
 
 app.use((req, res, next) => {
   res.status(404).send('<h4>Page not found</h4>');
 });
+
 
 // Connect to the Database
 mongoose
