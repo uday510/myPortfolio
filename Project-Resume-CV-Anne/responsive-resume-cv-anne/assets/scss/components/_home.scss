@@ -1,0 +1,55 @@
+/*=============== HOME ===============*/
+.home{
+   &__container{
+      padding-top: 7.5rem;
+      text-align: center;
+      row-gap: 0;
+   }
+   &__name,
+   &__profession{
+      font-size: var(--biggest-font-size);
+      letter-spacing: 2px;
+   }
+   &__name{
+      margin-bottom: .25rem;
+   }
+   &__blob{
+      position: relative;
+      justify-self: center;
+   }
+   &__perfil{
+      width: 230px;
+      height: 270px;
+      background: linear-gradient(132deg,
+                  hsl(45, 6%, 70%,) 25%,
+                  hsl(30, 12%, 50%) 105%);
+      border-radius: 15rem 15rem 0 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      overflow: hidden;
+   }
+   &__img{
+      width: 205px;
+      transform: translateY(1px);
+   }
+   &__star-1,
+   &__star-2{
+      position: absolute;
+      width: 50px;
+      fill: var(--title-color);
+      transition: fill .4s;
+   }
+   &__star-1{
+      top: 2.5rem;
+      left: -3rem;
+      rotate: 15deg;
+   }
+   &__star-2{
+      right: -3.5rem;
+      bottom: .75rem;
+   }
+   &__profession{
+      transform: translateY(-1.2rem);
+   }
+}
