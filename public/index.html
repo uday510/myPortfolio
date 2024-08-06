@@ -3,17 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uday Teja</title>
+    <title>🌍 Uday Teja</title>
     <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Earth_symbol_blue.svg/1024px-Earth_symbol_blue.svg.png" type="image/png">
+    <meta name="description" content="Bandi Uday Teja's personal webpage showcasing skills, interests, and contact information.">
+    <meta name="keywords" content="Bandi Uday Teja, Software Engineer, Data Structures, Algorithms, Scalable Systems, Tech Community">
+    <meta name="author" content="Bandi Uday Teja">
+    <meta property="og:title" content="Bandi Uday Teja">
+    <meta property="og:description" content="Software Engineer with a passion for designing scalable systems and solving complex problems.">
+    <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Earth_symbol_blue.svg/1024px-Earth_symbol_blue.svg.png">
+    <meta property="og:url" content="https://udayteja.com">
+    <meta name="twitter:card" content="summary_large_image">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Montserrat', sans-serif;
             margin: 0;
             padding: 0;
-            user-select: none; 
-            background-color: #f4f4f4;
-            overflow: hidden; 
+            user-select: none; /* Disable text selection */
+            background-color: transparent; /* Transparent background */
+            overflow: hidden; /* Remove scrollbar */
         }
         .container {
             max-width: 600px;
@@ -22,8 +30,7 @@
             text-align: center;
             box-sizing: border-box;
             position: relative;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: transparent; /* Transparent background */
             border-radius: 10px;
         }
         h1, h2 {
@@ -87,11 +94,10 @@
             top: 0;
             width: 100%;
             display: flex;
-            justify-content: space-around; 
+            justify-content: space-around; /* Distribute items evenly */
             align-items: center;
             padding: 10px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: transparent; /* Transparent background */
             z-index: 1000;
         }
         .top-bar div {
@@ -128,13 +134,16 @@
             .container {
                 margin: 30px auto;
             }
+            .links a {
+                margin: 3px;
+            }
         }
         .visitor-count {
             position: fixed;
             bottom: 10px;
             right: 10px;
             font-size: 0.85em;
-            color: #555;
+            color: #00796b; /* Teal color for a professional look */
         }
     </style>
     <script>
@@ -144,19 +153,8 @@
             document.getElementById('popup').style.display = 'block';
         });
 
-        document.addEventListener('keydown', event => {
-            if (
-                event.key === 'F12' || 
-                (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'J' || event.key === 'C' || event.key === 'K')) || 
-                (event.ctrlKey && event.key === 'U') || 
-                (event.ctrlKey && event.key === 'F') ||
-                (event.metaKey && event.altKey && (event.key === 'I' || event.key === 'J' || event.key === 'C' || event.key === 'K')) || 
-                (event.metaKey && event.key === 'U') || 
-                (event.metaKey && event.key === 'F')
-            ) {
-                event.preventDefault();
-            }
-        });
+        
+
 
         function closePopup() {
             document.getElementById('overlay').style.display = 'none';
@@ -174,19 +172,11 @@
         }
         setInterval(updateUTCTime, 1000);
 
-        // Fetch user's IP address using ipapi.co
+        // Fetch user's IP address and send it to the backend for visitor count
         fetch('https://ipapi.co/ip/')
             .then(response => response.text())
-            .then(data => {
-                document.getElementById('user-ip').textContent = `IP: ${data}`;
-
-                // Visitor count based on IP
-                let visitorIPs = JSON.parse(localStorage.getItem('visitorIPs') || '[]');
-                if (!visitorIPs.includes(data)) {
-                    visitorIPs.push(data);
-                    localStorage.setItem('visitorIPs', JSON.stringify(visitorIPs));
-                }
-                document.getElementById('visitor-count').textContent = `Visitor Count: ${visitorIPs.length}`;
+            .then(ip => {
+                document.getElementById('user-ip').textContent = `IP: ${ip}`;
             });
 
         // Quotes to display
@@ -222,12 +212,12 @@
     </script>
 </head>
 <body>
-    <div class="top-bar">
-        <div id="user-ip" class="loading">IP: Fetching...</div>
-        <div id="quote" class="quote"></div>
-        <div id="utc-time" class="loading">UTC: Fetching...</div>
+    <div class="top-bar" role="banner">
+        <div id="user-ip" class="loading" aria-label="User IP Address">IP: Fetching...</div>
+        <div id="quote" class="quote" aria-live="polite" aria-atomic="true"></div>
+        <div id="utc-time" class="loading" aria-label="Current UTC Time">UTC: Fetching...</div>
     </div>
-    <div class="container">
+    <div class="container" role="main">
         <div class="header">
             <h1>Bandi Uday Teja</h1>
             <p>🌍 Earth</p>
@@ -257,14 +247,22 @@
             <a href="https://prd0.s3.ap-south-2.amazonaws.com/resume.pdf" target="_blank">View My Detailed Resume</a>
         </div>
     </div>
-
-    <div class="visitor-count" id="visitor-count"></div>
-
     <div id="overlay" onclick="closePopup()"></div>
     <div id="popup" class="popup">
         Right-click is disabled on this site.
         <br>
         <button onclick="closePopup()">Close</button>
     </div>
+
+    <noscript>
+        <style>
+            .container {
+                display: none;
+            }
+        </style>
+        <div style="text-align: center; padding: 20px; background-color: #fff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); border-radius: 10px;">
+            This website requires JavaScript to be enabled.
+        </div>
+    </noscript>
 </body>
 </html>
