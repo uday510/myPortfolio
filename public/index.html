@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌍 Uday Teja</title>
+    <title>Uday Teja</title>
     <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Earth_symbol_blue.svg/1024px-Earth_symbol_blue.svg.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -11,16 +11,20 @@
             font-family: 'Montserrat', sans-serif;
             margin: 0;
             padding: 0;
+            user-select: none; 
             background-color: #f4f4f4;
+            overflow: hidden; 
         }
         .container {
             max-width: 600px;
-            margin: 50px auto;
-            background: #fff;
+            margin: 70px auto;
             padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
             box-sizing: border-box;
+            position: relative;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
         }
         h1, h2 {
             color: #333;
@@ -46,9 +50,183 @@
         .resume-link a:hover {
             text-decoration: underline;
         }
+        .popup {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+        .popup button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 999;
+        }
+        .top-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around; 
+            align-items: center;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        .top-bar div {
+            flex: 1;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .quote {
+            font-size: 0.85em;
+            font-style: italic;
+            color: #555;
+            transition: opacity 2s ease-in-out;
+            opacity: 0;
+        }
+        .quote.show {
+            opacity: 1;
+        }
+        .loading {
+            font-style: italic;
+            color: #999;
+        }
+        @media (max-width: 600px) {
+            .top-bar {
+                flex-direction: column;
+                padding: 10px 20px;
+            }
+            .top-bar div {
+                padding: 10px 0;
+                text-align: center;
+            }
+            .top-bar div:last-child {
+                margin-bottom: 0;
+            }
+            .container {
+                margin: 30px auto;
+            }
+        }
+        .visitor-count {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.85em;
+            color: #555;
+        }
     </style>
+    <script>
+        document.addEventListener('contextmenu', event => {
+            event.preventDefault();
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('popup').style.display = 'block';
+        });
+
+        document.addEventListener('keydown', event => {
+            if (
+                event.key === 'F12' || 
+                (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'J' || event.key === 'C' || event.key === 'K')) || 
+                (event.ctrlKey && event.key === 'U') || 
+                (event.ctrlKey && event.key === 'F') ||
+                (event.metaKey && event.altKey && (event.key === 'I' || event.key === 'J' || event.key === 'C' || event.key === 'K')) || 
+                (event.metaKey && event.key === 'U') || 
+                (event.metaKey && event.key === 'F')
+            ) {
+                event.preventDefault();
+            }
+        });
+
+        function closePopup() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        // Function to update UTC time
+        function updateUTCTime() {
+            const utcTimeElement = document.getElementById('utc-time');
+            const now = new Date();
+            const hours = String(now.getUTCHours()).padStart(2, '0');
+            const minutes = String(now.getUTCMinutes()).padStart(2, '0');
+            const seconds = String(now.getUTCSeconds()).padStart(2, '0');
+            utcTimeElement.textContent = `UTC: ${hours}:${minutes}:${seconds}`;
+        }
+        setInterval(updateUTCTime, 1000);
+
+        // Fetch user's IP address using ipapi.co
+        fetch('https://ipapi.co/ip/')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('user-ip').textContent = `IP: ${data}`;
+
+                // Visitor count based on IP
+                let visitorIPs = JSON.parse(localStorage.getItem('visitorIPs') || '[]');
+                if (!visitorIPs.includes(data)) {
+                    visitorIPs.push(data);
+                    localStorage.setItem('visitorIPs', JSON.stringify(visitorIPs));
+                }
+                document.getElementById('visitor-count').textContent = `Visitor Count: ${visitorIPs.length}`;
+            });
+
+        // Quotes to display
+        const quotes = [
+            { text: "Sometimes it is the people who no one imagines anything of who do the things that no one can imagine.", author: "Alan Turing" },
+            { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+            { text: "Talk is cheap. Show me the code.", author: "Linus Torvalds" },
+            { text: "The computer was born to solve problems that did not exist before.", author: "Bill Gates" },
+            { text: "Innovation distinguishes between a leader and a follower.", author: "Steve Jobs" },
+            { text: "Simplicity is the soul of efficiency.", author: "Austin Freeman" },
+            { text: "Code is like humor. When you have to explain it, it’s bad.", author: "Cory House" },
+            { text: "First, solve the problem. Then, write the code.", author: "John Johnson" }
+        ];
+
+        let currentQuoteIndex = 0;
+
+        function updateQuote() {
+            const quoteElement = document.getElementById('quote');
+            const quote = quotes[currentQuoteIndex];
+            quoteElement.classList.remove('show');
+            setTimeout(() => {
+                quoteElement.textContent = `"${quote.text}" - ${quote.author}`;
+                quoteElement.classList.add('show');
+            }, 1000);
+            currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+        }
+
+        setInterval(updateQuote, 5000); // Change quote every 5 seconds
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateQuote(); // Initial quote display
+        });
+    </script>
 </head>
 <body>
+    <div class="top-bar">
+        <div id="user-ip" class="loading">IP: Fetching...</div>
+        <div id="quote" class="quote"></div>
+        <div id="utc-time" class="loading">UTC: Fetching...</div>
+    </div>
     <div class="container">
         <div class="header">
             <h1>Bandi Uday Teja</h1>
@@ -78,6 +256,15 @@
             <h2>Resume</h2>
             <a href="https://prd0.s3.ap-south-2.amazonaws.com/resume.pdf" target="_blank">View My Detailed Resume</a>
         </div>
+    </div>
+
+    <div class="visitor-count" id="visitor-count"></div>
+
+    <div id="overlay" onclick="closePopup()"></div>
+    <div id="popup" class="popup">
+        Right-click is disabled on this site.
+        <br>
+        <button onclick="closePopup()">Close</button>
     </div>
 </body>
 </html>
