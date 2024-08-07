@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -121,15 +122,7 @@
         }
         @media (max-width: 600px) {
             .top-bar {
-                flex-direction: column;
-                padding: 10px 20px;
-            }
-            .top-bar div {
-                padding: 10px 0;
-                text-align: center;
-            }
-            .top-bar div:last-child {
-                margin-bottom: 0;
+                display: none; /* Hide the top-bar on mobile devices */
             }
             .container {
                 margin: 30px auto;
@@ -153,8 +146,19 @@
             document.getElementById('popup').style.display = 'block';
         });
 
-        
-
+        document.addEventListener('keydown', event => {
+            if (
+                event.key === 'F12' || 
+                (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'J' || event.key === 'C' || event.key === 'K')) || 
+                (event.ctrlKey && event.key === 'U') || 
+                (event.ctrlKey && event.key === 'F') ||
+                (event.metaKey && event.altKey && (event.key === 'I' || event.key === 'J' || event.key === 'C' || event.key === 'K')) || 
+                (event.metaKey && event.key === 'U') || 
+                (event.metaKey && event.key === 'F')
+            ) {
+                event.preventDefault();
+            }
+        });
 
         function closePopup() {
             document.getElementById('overlay').style.display = 'none';
@@ -247,6 +251,7 @@
             <a href="https://prd0.s3.ap-south-2.amazonaws.com/resume.pdf" target="_blank">View My Detailed Resume</a>
         </div>
     </div>
+
     <div id="overlay" onclick="closePopup()"></div>
     <div id="popup" class="popup">
         Right-click is disabled on this site.
