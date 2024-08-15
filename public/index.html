@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -146,13 +145,14 @@
             document.getElementById('popup').style.display = 'block';
         });
 
-        document.addEventListener('keydown', event => {
+        document.addEventListener('keydown', function(event) {
             if (
                 event.key === 'F12' || 
                 (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'J' || event.key === 'C' || event.key === 'K')) || 
                 (event.ctrlKey && event.key === 'U') || 
                 (event.ctrlKey && event.key === 'F') ||
-                (event.metaKey && event.altKey && (event.key === 'I' || event.key === 'J' || event.key === 'C' || event.key === 'K')) || 
+                (event.metaKey && event.altKey && event.key === 'I') || // Disables Cmd + Opt + I on macOS
+                (event.metaKey && event.altKey && (event.key === 'J' || event.key === 'C' || event.key === 'K')) || 
                 (event.metaKey && event.key === 'U') || 
                 (event.metaKey && event.key === 'F')
             ) {
@@ -254,7 +254,7 @@
 
     <div id="overlay" onclick="closePopup()"></div>
     <div id="popup" class="popup">
-        Right-click is disabled on this site.
+        Oops! Right-click is taking a nap. Try again later!
         <br>
         <button onclick="closePopup()">Close</button>
     </div>
