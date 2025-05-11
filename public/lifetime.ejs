@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="https://prd0.s3.ap-south-2.amazonaws.com/earth.png" type="image/png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= user_data.full_name %>'s Cosmic Journey</title>
+    <meta name="description" content="Explore <%= user_data.full_name %>'s favorite destinations, time since Earth's birth, and countdown to the next New Year.">
+    <meta name="keywords" content="<%= user_data.full_name %>, Travel, Favorite Places, Cosmic Journey">
+    <meta name="author" content="<%= user_data.full_name %>">
+    <meta property="og:title" content="<%= user_data.full_name %>'s Cosmic Journey">
+    <meta property="og:description" content="A cosmic showcase of <%= user_data.full_name %>'s favorite places, time since Earth's birth, and countdown to the next New Year.">
+    <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Earth_symbol_blue.svg/1024px-Earth_symbol_blue.svg.png">
+    <meta property="og:url" content="https://udayteja.com">
+    <meta name="twitter:card" content="summary_large_image">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2a1b9e;
+            --accent: #ffd700;
+            --text: #ffffff;
+            --bg: #0d0d1a;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --glow: 0 0 12px rgba(255, 215, 0, 0.5);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle, rgba(42, 27, 158, 0.8), var(--bg));
+            color: var(--text);
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+            animation: nebulaPulse 30s ease infinite;
+        }
+
+        @keyframes nebulaPulse {
+            0%, 100% { background: radial-gradient(circle, rgba(42, 27, 158, 0.8), var(--bg)); }
+            50% { background: radial-gradient(circle, rgba(42, 27, 158, 0.6), var(--bg)); }
+        }
+
+        body.dark-mode {
+            --text: #e0e0e0;
+            --card-bg: rgba(30, 30, 30, 0.2);
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 120px auto;
+            padding: 30px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .section {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 15px;
+            box-shadow: var(--shadow), var(--glow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .section:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), var(--glow);
+        }
+
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 2em;
+            color: var(--text);
+            margin-bottom: 25px;
+            text-shadow: 0 0 8px var(--accent);
+        }
+
+        ul {
+            padding: 0;
+            list-style: none;
+        }
+
+        li {
+            position: relative;
+            padding: 15px 0 15px 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            font-size: 1.1em;
+            transition: transform 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        li:hover {
+            transform: translateX(5px);
+            text-shadow: 0 0 10px var(--accent);
+        }
+
+        li:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, var(--accent), transparent);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--accent);
+            animation: orbGlow 2s ease infinite;
+        }
+
+        @keyframes orbGlow {
+            0%, 100% { box-shadow: 0 0 15px var(--accent); }
+            50% { box-shadow: 0 0 25px var(--accent); }
+        }
+
+        li:hover:after {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 50%;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--accent));
+            opacity: 0.5;
+        }
+
+        .collapsible-list {
+            max-height: 200px;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .collapsible-list.expanded {
+            max-height: none;
+        }
+
+        .toggle-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background: var(--primary);
+            color: var(--text);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.9em;
+            box-shadow: var(--glow);
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .toggle-btn:hover {
+            background: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .time-display {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 15px;
+            box-shadow: var(--shadow), var(--glow);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.2em;
+            color: var(--text);
+            text-shadow: 0 0 8px var(--accent);
+            animation: flicker 5s ease infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.95; }
+        }
+
+        .top-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 20px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            z-index: 1000;
+        }
+
+        .dark-mode-btn {
+            padding: 12px 25px;
+            background: var(--primary);
+            color: var(--text);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .dark-mode-btn:hover {
+            background: var(--accent);
+            transform: scale(1.05);
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: 30px;
+            background: var(--card-bg);
+            color: var(--text);
+            border-radius: 15px;
+            box-shadow: var(--shadow), var(--glow);
+            z-index: 1000;
+            text-align: center;
+            animation: pop 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            font-size: 1em;
+        }
+
+        @keyframes pop {
+            from { transform: translate(-50%, -50%) scale(0.9); opacity: 0; }
+            to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        .popup button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            background: var(--primary);
+            color: var(--text);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: background 0.3s ease;
+        }
+
+        .popup button:hover {
+            background: var(--accent);
+        }
+
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 999;
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            padding: 15px;
+            background: var(--primary);
+            color: var(--text);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .scroll-top.visible {
+            display: block;
+        }
+
+        .scroll-top:hover {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 100px 20px;
+                padding: 20px;
+            }
+            h2 {
+                font-size: 1.6em;
+            }
+            .time-display {
+                font-size: 1em;
+            }
+            .dark-mode-btn, .toggle-btn, .popup button {
+                padding: 10px 20px;
+                font-size: 0.85em;
+            }
+            .scroll-top {
+                bottom: 15px;
+                right: 15px;
+                padding: 12px;
+            }
+        }
+    </style>
+    <script>
+        (function() {
+            // Dark Mode Toggle
+            function toggleDarkMode() {
+                const body = document.body;
+                if (body) {
+                    body.classList.toggle('dark-mode');
+                    localStorage.setItem('dark-mode', body.classList.contains('dark-mode') ? 'enabled' : 'disabled');
+                }
+            }
+
+            // Apply saved dark mode preference
+            if (localStorage.getItem('dark-mode') === 'enabled') {
+                const body = document.body;
+                if (body) body.classList.add('dark-mode');
+            }
+
+            // Close Popup
+            function closePopup() {
+                const overlay = document.getElementById('overlay');
+                const popup = document.getElementById('popup');
+                if (overlay && popup) {
+                    overlay.style.display = 'none';
+                    popup.style.display = 'none';
+                }
+            }
+
+            // Calculate Time Since Earth's Birth
+            function updateEarthTime() {
+                const now = new Date();
+                const msInYear = 1000 * 60 * 60 * 24 * 365.25;
+                const msInDay = 1000 * 60 * 60 * 24;
+                const msInHour = 1000 * 60 * 60;
+                const msInMinute = 1000 * 60;
+                const msInSecond = 1000;
+
+                // Use a reference point within safe range (e.g., 1 billion years ago)
+                const referenceYears = 1000000000; // 1 billion years
+                const referenceTime = now.getTime() - referenceYears * msInYear;
+                const diff = now.getTime() - referenceTime;
+
+                const years = Math.floor(diff / msInYear);
+                const days = Math.floor((diff % msInYear) / msInDay);
+                const hours = Math.floor((diff % msInDay) / msInHour);
+                const minutes = Math.floor((diff % msInHour) / msInMinute);
+                const seconds = Math.floor((diff % msInMinute) / msInSecond);
+
+                const earthTimeDisplay = document.getElementById('earth-time-display');
+                if (earthTimeDisplay) {
+                    earthTimeDisplay.textContent = `Time Since Earth's Birth: 4.54 billion years, ${years}y ${days}d ${hours}h ${minutes}m ${seconds}s`;
+                }
+            }
+
+            // Calculate Time Until Next New Year
+            function updateNewYearTime() {
+                const now = new Date();
+                const currentYear = now.getFullYear();
+                const nextNewYear = new Date(currentYear + 1, 0, 1); // January 1st of next year
+                const diff = nextNewYear - now;
+
+                const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.42));
+                const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 30.42)) / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                const newYearDisplay = document.getElementById('new-year-display');
+                if (newYearDisplay) {
+                    newYearDisplay.textContent = `Time Until New Year: ${months}m ${days}d ${hours}h ${minutes}m ${seconds}s`;
+                }
+            }
+
+            // Set up event listeners after DOM is loaded
+            document.addEventListener('DOMContentLoaded', function() {
+                // Dark mode toggle
+                const darkModeBtn = document.querySelector('.dark-mode-btn');
+                if (darkModeBtn) {
+                    darkModeBtn.addEventListener('click', toggleDarkMode);
+                }
+
+                // Popup close button
+                const closePopupBtn = document.querySelector('.popup button');
+                if (closePopupBtn) {
+                    closePopupBtn.addEventListener('click', closePopup);
+                }
+
+                // Scroll Animations
+                const sectionObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && entry.target) {
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                // Observe sections
+                document.querySelectorAll('.section').forEach(section => {
+                    if (section) sectionObserver.observe(section);
+                });
+
+                // Collapsible Favourite Places
+                const favoritePlacesList = document.querySelector('#favorite-places-list');
+                const toggleBtn = document.querySelector('#toggle-favorite-places');
+                if (favoritePlacesList && toggleBtn) {
+                    const items = favoritePlacesList.querySelectorAll('li');
+                    if (items.length > 5) {
+                        toggleBtn.style.display = 'inline-block';
+                        toggleBtn.addEventListener('click', () => {
+                            favoritePlacesList.classList.toggle('expanded');
+                            toggleBtn.textContent = favoritePlacesList.classList.contains('expanded') ? '🌌' : '🌠';
+                        });
+                    }
+                }
+
+                // Scroll to Top Button
+                const scrollTopBtn = document.createElement('button');
+                scrollTopBtn.className = 'scroll-top';
+                scrollTopBtn.innerHTML = '🚀';
+                scrollTopBtn.setAttribute('aria-label', 'Scroll to Top');
+                document.body.appendChild(scrollTopBtn);
+
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 300) {
+                        scrollTopBtn.classList.add('visible');
+                    } else {
+                        scrollTopBtn.classList.remove('visible');
+                    }
+                });
+
+                scrollTopBtn.addEventListener('click', () => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+
+                // Cosmic Particles
+                function createParticles() {
+                    const particles = document.createElement('div');
+                    particles.className = 'particles';
+                    for (let i = 0; i < 20; i++) {
+                        const particle = document.createElement('div');
+                        particle.style.position = 'absolute';
+                        particle.style.width = `${Math.random() * 3}px`;
+                        particle.style.height = particle.style.width;
+                        particle.style.background = 'rgba(255, 255, 255, 0.6)';
+                        particle.style.borderRadius = '50%';
+                        particle.style.left = `${Math.random() * 100}%`;
+                        particle.style.top = `${Math.random() * 100}%`;
+                        particle.style.animation = `orbit ${8 + Math.random() * 12}s linear infinite`;
+                        particles.appendChild(particle);
+                    }
+                    document.body.appendChild(particles);
+                }
+                createParticles();
+
+                // Update times
+                updateEarthTime();
+                updateNewYearTime();
+                setInterval(() => {
+                    updateEarthTime();
+                    updateNewYearTime();
+                }, 1000);
+            });
+
+            // Right-click and DevTools Prevention
+            document.addEventListener('contextmenu', e => {
+                e.preventDefault();
+                const overlay = document.getElementById('overlay');
+                const popup = document.getElementById('popup');
+                if (overlay && popup) {
+                    overlay.style.display = 'block';
+                    popup.style.display = 'block';
+                }
+            });
+
+            document.addEventListener('keydown', e => {
+                if (
+                    e.key === 'F12' ||
+                    (e.ctrlKey && e.shiftKey && ['I', 'J', 'C', 'K'].includes(e.key)) ||
+                    (e.ctrlKey && ['U', 'F'].includes(e.key)) ||
+                    (e.metaKey && e.altKey && ['I', 'J', 'C', 'K'].includes(e.key)) ||
+                    (e.metaKey && ['U', 'F'].includes(e.key))
+                ) {
+                    e.preventDefault();
+                }
+            });
+
+            // Particle Animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes orbit {
+                    0% { transform: translate(0, 0) rotate(0deg) translateX(50px) rotate(0deg); }
+                    100% { transform: translate(0, 0) rotate(360deg) translateX(50px) rotate(-360deg); }
+                }
+            `;
+            document.head.appendChild(style);
+        })();
+    </script>
+</head>
+<body>
+    <div class="top-bar" role="banner">
+        <button class="dark-mode-btn" aria-label="Toggle Dark Mode">🌙</button>
+    </div>
+
+    <div class="container" role="main">
+        <div class="section">
+            <h2>Favourite Places</h2>
+            <ul id="favorite-places-list" class="collapsible-list">
+                <% user_data.favorite_places.forEach(place => { %>
+                    <li><%= place %></li>
+                <% }) %>
+            </ul>
+            <button id="toggle-favorite-places" class="toggle-btn" style="display: none;">🌠</button>
+        </div>
+
+        <div class="time-display" id="earth-time-display">
+            Time Since Earth's Birth: Calculating...
+        </div>
+
+        <div class="time-display" id="new-year-display">
+            Time Until New Year: Calculating...
+        </div>
+    </div>
+
+    <div id="overlay" onclick="closePopup()"></div>
+    <div id="popup" class="popup">
+        Cosmic interference detected! Right-click is orbiting elsewhere.
+        <br>
+        <button>Return to Earth</button>
+    </div>
+
+    <noscript>
+        <style>.container { display: none; }</style>
+        <div style="text-align: center; padding: 20px; background: var(--card-bg); border-radius: 15px; margin: 20px;">
+            This cosmic journey requires JavaScript to launch. Please enable JavaScript.
+        </div>
+    </noscript>
+</body>
+</html>
